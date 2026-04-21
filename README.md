@@ -2,7 +2,7 @@
 
 A full-stack travel planning web application built with React and Node.js.
 
-**[Live Demo](https://travel-app-pi-liart.vercel.app/)** · [Backend Repo](https://github.com/gagaa03/travel-app-server)
+**[Live Demo](https://travel-app-pi-liart.vercel.app/)** · [Backend Repo](https://github.com/gagaa03/travel-app-server) · [繁體中文](README.zh-TW.md)
 
 ---
 
