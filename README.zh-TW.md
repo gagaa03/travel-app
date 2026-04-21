@@ -1,8 +1,37 @@
 # Travel App 旅遊規劃應用
 
-一個使用 React 與 Node.js 打造的全端旅遊規劃網頁應用程式。
+全端旅遊規劃網頁應用程式 — 管理旅程、規劃行程、追蹤花費，並透過即時資料探索目的地。
 
 **[線上 Demo](https://travel-app-pi-liart.vercel.app/)** · [後端 Repo](https://github.com/gagaa03/travel-app-server)
+
+---
+
+## 截圖
+
+<img src="screenshots/01-trip-list.png" width="700" />
+<p><sub>旅程列表 — 搜尋、篩選、排序所有旅程</sub></p>
+
+<img src="screenshots/03-trip-detail.png" width="700" />
+<p><sub>旅程詳情 — 即時天氣、匯率、國家資訊與城市照片</sub></p>
+
+<img src="screenshots/04-itinerary.png" width="700" />
+<p><sub>行程規劃 — 拖曳排序行程，搭配互動地圖與路線顏色</sub></p>
+
+<img src="screenshots/05-expenses.png" width="700" />
+<p><sub>花費記錄 — 記錄支出並追蹤預算進度</sub></p>
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="screenshots/02-trip-list-mobile.png" width="250" /><br/>
+      <sub>手機版</sub>
+    </td>
+    <td align="center">
+      <img src="screenshots/06-dark-mode-mobile.png" width="250" /><br/>
+      <sub>夜間模式</sub>
+    </td>
+  </tr>
+</table>
 
 ---
 
@@ -18,27 +47,28 @@
 - **深色模式** — 全站深色 / 淺色主題切換
 - **響應式設計** — 支援手機與桌機
 
+---
+
 ## 技術架構
 
-**前端**
+### 前端
 - React 18 + Vite
-- Tailwind CSS
-- shadcn/ui + Framer Motion
+- Tailwind CSS + shadcn/ui + Framer Motion
 - React Router v6
 - React Leaflet（OpenStreetMap + OSRM 路線）
 - dnd-kit（拖曳排序）
 
-**後端**
+### 後端
 - Node.js + Express
 - PostgreSQL（Supabase）
 - REST API
 
-**部署**
+### 部署
 - 前端：Vercel
 - 後端：Render
 - 資料庫：Supabase
 
-## 使用的 API
+### 使用的 API
 
 | API | 用途 |
 |-----|------|
@@ -48,6 +78,8 @@
 | Unsplash | 城市封面照片 |
 | Nominatim（OpenStreetMap） | 地點搜尋與地理編碼 |
 | OSRM | 真實步行 / 駕車路線 |
+
+---
 
 ## 本地啟動
 
@@ -95,40 +127,7 @@ PORT=3000
 npm start
 ```
 
-## 截圖
-
-<table>
-  <tr>
-    <td align="center">
-      <img src="screenshots/01-trip-list.png" width="420" /><br/>
-      <sub>旅程列表</sub>
-    </td>
-    <td align="center">
-      <img src="screenshots/03-trip-detail.png" width="420" /><br/>
-      <sub>旅程詳情</sub>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="screenshots/04-itinerary.png" width="420" /><br/>
-      <sub>行程表 + 地圖</sub>
-    </td>
-    <td align="center">
-      <img src="screenshots/05-expenses.png" width="420" /><br/>
-      <sub>花費記錄</sub>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="screenshots/02-trip-list-mobile.png" width="200" /><br/>
-      <sub>手機版</sub>
-    </td>
-    <td align="center">
-      <img src="screenshots/06-dark-mode-mobile.png" width="200" /><br/>
-      <sub>夜間模式（手機版）</sub>
-    </td>
-  </tr>
-</table>
+---
 
 ## 授權
 

@@ -1,8 +1,37 @@
 # Travel App
 
-A full-stack travel planning web application built with React and Node.js.
+A full-stack travel planning web application — manage trips, plan itineraries, track expenses, and explore destinations with real-time data.
 
 **[Live Demo](https://travel-app-pi-liart.vercel.app/)** · [Backend Repo](https://github.com/gagaa03/travel-app-server) · [繁體中文](README.zh-TW.md)
+
+---
+
+## Screenshots
+
+<img src="screenshots/01-trip-list.png" width="700" />
+<p><sub>Trip List — search, filter, and sort all your trips</sub></p>
+
+<img src="screenshots/03-trip-detail.png" width="700" />
+<p><sub>Trip Detail — real-time weather, exchange rate, country info, and city photo</sub></p>
+
+<img src="screenshots/04-itinerary.png" width="700" />
+<p><sub>Itinerary Planner — drag-and-drop schedule with interactive map and route colors</sub></p>
+
+<img src="screenshots/05-expenses.png" width="700" />
+<p><sub>Expense Tracker — log spending and track budget progress</sub></p>
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="screenshots/02-trip-list-mobile.png" width="250" /><br/>
+      <sub>Mobile View</sub>
+    </td>
+    <td align="center">
+      <img src="screenshots/06-dark-mode-mobile.png" width="250" /><br/>
+      <sub>Dark Mode</sub>
+    </td>
+  </tr>
+</table>
 
 ---
 
@@ -18,27 +47,28 @@ A full-stack travel planning web application built with React and Node.js.
 - **Dark Mode** — System-wide dark/light theme toggle
 - **Responsive Design** — Optimized for both mobile and desktop
 
+---
+
 ## Tech Stack
 
-**Frontend**
+### Frontend
 - React 18 + Vite
-- Tailwind CSS
-- shadcn/ui + Framer Motion
+- Tailwind CSS + shadcn/ui + Framer Motion
 - React Router v6
 - React Leaflet (OpenStreetMap + OSRM routing)
 - dnd-kit (drag and drop)
 
-**Backend**
+### Backend
 - Node.js + Express
 - PostgreSQL (Supabase)
 - REST API
 
-**Deployment**
+### Deployment
 - Frontend: Vercel
 - Backend: Render
 - Database: Supabase
 
-## APIs Used
+### APIs Used
 
 | API | Purpose |
 |-----|---------|
@@ -48,6 +78,8 @@ A full-stack travel planning web application built with React and Node.js.
 | Unsplash | City cover photos |
 | Nominatim (OpenStreetMap) | Location search & geocoding |
 | OSRM | Real walking/driving routes |
+
+---
 
 ## Getting Started
 
@@ -99,40 +131,7 @@ PORT=3000
 npm start
 ```
 
-## Screenshots
-
-<table>
-  <tr>
-    <td align="center">
-      <img src="screenshots/01-trip-list.png" width="420" /><br/>
-      <sub>Trip List</sub>
-    </td>
-    <td align="center">
-      <img src="screenshots/03-trip-detail.png" width="420" /><br/>
-      <sub>Trip Detail</sub>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="screenshots/04-itinerary.png" width="420" /><br/>
-      <sub>Itinerary Planner with Map</sub>
-    </td>
-    <td align="center">
-      <img src="screenshots/05-expenses.png" width="420" /><br/>
-      <sub>Expense Tracker</sub>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="screenshots/02-trip-list-mobile.png" width="200" /><br/>
-      <sub>Mobile View</sub>
-    </td>
-    <td align="center">
-      <img src="screenshots/06-dark-mode-mobile.png" width="200" /><br/>
-      <sub>Dark Mode (Mobile)</sub>
-    </td>
-  </tr>
-</table>
+---
 
 ## License
 
