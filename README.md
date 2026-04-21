@@ -1,4 +1,4 @@
-# ✈️ Travel App
+# Travel App
 
 A full-stack travel planning web application built with React and Node.js.
 

@@ -1,4 +1,4 @@
-# ✈️ Travel App 旅遊規劃應用
+# Travel App 旅遊規劃應用
 
 一個使用 React 與 Node.js 打造的全端旅遊規劃網頁應用程式。
 
