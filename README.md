@@ -1,16 +1,108 @@
-# React + Vite
+# ✈️ Travel App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack travel planning web application built with React and Node.js.
 
-Currently, two official plugins are available:
+**[Live Demo](https://travel-app-pi-liart.vercel.app/)** · [Backend Repo](https://github.com/gagaa03/travel-app-server)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Trip Management** — Create, edit, and delete trips with status tracking (Planning / In Progress / Completed)
+- **Trip Detail** — Real-time weather, country info, currency exchange rate, and city photos via external APIs
+- **Itinerary Planner** — Day-by-day schedule with drag-and-drop reordering, categories, and location search
+- **Interactive Map** — Route visualization with colors by transport method (walk, transit, car, flight)
+- **Reservations** — Track hotel, restaurant, and attraction bookings
+- **Expense Tracker** — Log spending, set budgets, and view progress
+- **Search & Filter** — Filter trips by status, sort by date or city
+- **Dark Mode** — System-wide dark/light theme toggle
+- **Responsive Design** — Optimized for both mobile and desktop
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Frontend**
+- React 18 + Vite
+- Tailwind CSS
+- shadcn/ui + Framer Motion
+- React Router v6
+- React Leaflet (OpenStreetMap + OSRM routing)
+- dnd-kit (drag and drop)
+
+**Backend**
+- Node.js + Express
+- PostgreSQL (Supabase)
+- REST API
+
+**Deployment**
+- Frontend: Vercel
+- Backend: Render
+- Database: Supabase
+
+## APIs Used
+
+| API | Purpose |
+|-----|---------|
+| OpenWeatherMap | Current weather by city |
+| REST Countries | Country info and flag |
+| ExchangeRate API | Live currency exchange |
+| Unsplash | City cover photos |
+| Nominatim (OpenStreetMap) | Location search & geocoding |
+| OSRM | Real walking/driving routes |
+
+## Getting Started
+
+### Prerequisites
+- Node.js 18+
+- PostgreSQL database
+
+### Frontend
+
+```bash
+git clone https://github.com/gagaa03/travel-app.git
+cd travel-app
+npm install
+```
+
+Create a `.env` file:
+
+```env
+VITE_API_URL=http://localhost:3000
+VITE_WEATHER_API_KEY=your_key
+VITE_UNSPLASH_API_KEY=your_key
+VITE_EXCHANGE_API_KEY=your_key
+```
+
+```bash
+npm run dev
+```
+
+### Backend
+
+```bash
+git clone https://github.com/gagaa03/travel-app-server.git
+cd travel-app-server
+npm install
+```
+
+Create a `.env` file:
+
+```env
+DB_HOST=your_host
+DB_PORT=5432
+DB_USER=your_user
+DB_PASSWORD=your_password
+DB_NAME=postgres
+PORT=3000
+```
+
+```bash
+npm start
+```
+
+## Screenshots
+
+> _Add screenshots here_
+
+## License
+
+MIT
