@@ -97,15 +97,15 @@ npm start
 
 ## 截圖
 
-![旅程列表](screenshots/01-trip-list.png)
+<img src="screenshots/01-trip-list.png" width="700" />
 
-![旅程列表手機版](screenshots/02-trip-list-mobile.png)
+<img src="screenshots/03-trip-detail.png" width="700" />
 
-![旅程詳情](screenshots/03-trip-detail.png)
+<img src="screenshots/04-itinerary.png" width="700" />
 
-![行程表](screenshots/04-itinerary.png)
+<img src="screenshots/05-expenses.png" width="700" />
 
-![花費記錄](screenshots/05-expenses.png)
+<img src="screenshots/02-trip-list-mobile.png" width="300" />
 
 ## 授權
 

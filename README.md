@@ -101,15 +101,15 @@ npm start
 
 ## Screenshots
 
-![Trip List](screenshots/01-trip-list.png)
+<img src="screenshots/01-trip-list.png" width="700" />
 
-![Trip List Mobile](screenshots/02-trip-list-mobile.png)
+<img src="screenshots/03-trip-detail.png" width="700" />
 
-![Trip Detail](screenshots/03-trip-detail.png)
+<img src="screenshots/04-itinerary.png" width="700" />
 
-![Itinerary](screenshots/04-itinerary.png)
+<img src="screenshots/05-expenses.png" width="700" />
 
-![Expenses](screenshots/05-expenses.png)
+<img src="screenshots/02-trip-list-mobile.png" width="300" />
 
 ## License
 
