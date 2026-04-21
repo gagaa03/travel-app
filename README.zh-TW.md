@@ -97,15 +97,38 @@ npm start
 
 ## 截圖
 
-<img src="screenshots/01-trip-list.png" width="700" />
-
-<img src="screenshots/03-trip-detail.png" width="700" />
-
-<img src="screenshots/04-itinerary.png" width="700" />
-
-<img src="screenshots/05-expenses.png" width="700" />
-
-<img src="screenshots/02-trip-list-mobile.png" width="300" />
+<table>
+  <tr>
+    <td align="center">
+      <img src="screenshots/01-trip-list.png" width="420" /><br/>
+      <sub>旅程列表</sub>
+    </td>
+    <td align="center">
+      <img src="screenshots/03-trip-detail.png" width="420" /><br/>
+      <sub>旅程詳情</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="screenshots/04-itinerary.png" width="420" /><br/>
+      <sub>行程表 + 地圖</sub>
+    </td>
+    <td align="center">
+      <img src="screenshots/05-expenses.png" width="420" /><br/>
+      <sub>花費記錄</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="screenshots/02-trip-list-mobile.png" width="200" /><br/>
+      <sub>手機版</sub>
+    </td>
+    <td align="center">
+      <img src="screenshots/06-dark-mode-mobile.png" width="200" /><br/>
+      <sub>夜間模式（手機版）</sub>
+    </td>
+  </tr>
+</table>
 
 ## 授權
 
