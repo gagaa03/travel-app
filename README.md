@@ -101,7 +101,15 @@ npm start
 
 ## Screenshots
 
-> _Add screenshots here_
+![Trip List](screenshots/01-trip-list.png)
+
+![Trip List Mobile](screenshots/02-trip-list-mobile.png)
+
+![Trip Detail](screenshots/03-trip-detail.png)
+
+![Itinerary](screenshots/04-itinerary.png)
+
+![Expenses](screenshots/05-expenses.png)
 
 ## License
 

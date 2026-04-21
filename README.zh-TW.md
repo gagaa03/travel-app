@@ -97,7 +97,15 @@ npm start
 
 ## 截圖
 
-> _截圖待補充_
+![旅程列表](screenshots/01-trip-list.png)
+
+![旅程列表手機版](screenshots/02-trip-list-mobile.png)
+
+![旅程詳情](screenshots/03-trip-detail.png)
+
+![行程表](screenshots/04-itinerary.png)
+
+![花費記錄](screenshots/05-expenses.png)
 
 ## 授權
 
