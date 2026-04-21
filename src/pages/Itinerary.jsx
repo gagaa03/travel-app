@@ -234,7 +234,7 @@ function TransportConnector({ item, onSave }) {
 
     return (
         <div className="flex gap-3">
-            <div className="w-14 shrink-0" />
+            <div className="w-10 md:w-14 shrink-0" />
             <div className="w-4 flex flex-col items-center shrink-0">
                 <div className="w-px flex-1 bg-border" />
             </div>
@@ -305,7 +305,7 @@ function ItineraryItem({ item, onDelete, onEdit, isFirst, isLast, city }) {
 
     return (
         <div ref={setNodeRef} style={style} className="flex gap-3 items-center">
-            <div className="w-14 shrink-0 text-right">
+            <div className="w-10 md:w-14 shrink-0 text-right">
                 <span className="text-sm font-mono font-semibold text-primary">
                     {item.time || ''}
                 </span>
@@ -475,7 +475,7 @@ function Itinerary() {
 
     return (
         <div className="min-h-screen bg-background">
-            <div className="max-w-7xl mx-auto p-8 flex flex-col gap-6">
+            <div className="max-w-7xl mx-auto p-4 md:p-8 flex flex-col gap-6">
                 <div className="flex items-center gap-3">
                     <RippleButton onClick={() => navigate(`/trip/${id}`)} className="text-sm border-border">
                         ← 返回
@@ -591,7 +591,7 @@ function Itinerary() {
                         </div>
                     </div>
 
-                    <div className="sticky top-6 h-[600px] rounded-2xl overflow-hidden border border-border bg-card">
+                    <div className="sticky top-6 h-[300px] lg:h-[600px] rounded-2xl overflow-hidden border border-border bg-card">
                         <DayMap
                             key={dayItems.map(i => `${i.id}|${i.location || ''}|${JSON.stringify(i.transport_after)}`).join(',')}
                             items={dayItems}

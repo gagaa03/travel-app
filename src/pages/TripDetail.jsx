@@ -150,7 +150,7 @@ function TripDetail() {
 
     if (!trip || loading || weatherLoading) return (
         <div className="min-h-screen bg-background">
-            <div className="max-w-6xl mx-auto p-8 flex flex-col gap-6">
+            <div className="max-w-6xl mx-auto p-4 md:p-8 flex flex-col gap-6">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <Skeleton className="h-9 w-20 rounded-xl" />
@@ -335,7 +335,7 @@ function TripDetail() {
                                         <select
                                             value={newItem.category}
                                             onChange={e => setNewItem(prev => ({ ...prev, category: e.target.value }))}
-                                            className="border border-border rounded-lg px-3 py-2 text-sm bg-background"
+                                            className="border border-border rounded-lg px-3 py-2 text-sm bg-background shrink-0"
                                         >
                                             <option value="attraction">景點</option>
                                             <option value="restaurant">餐廳</option>
