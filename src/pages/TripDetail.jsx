@@ -300,18 +300,18 @@ function TripDetail() {
                                                     <option value="other">其他</option>
                                                 </select>
                                                 <input placeholder="班次號碼" value={transport[direction].flightNumber} onChange={e => setTransport(prev => ({ ...prev, [direction]: { ...prev[direction], flightNumber: e.target.value }}))} className="border border-border rounded-lg px-3 py-2 bg-background text-sm" />
-                                                <div className="flex gap-2">
+                                                <div className="flex flex-col sm:flex-row gap-2">
                                                     <input placeholder="出發地" value={transport[direction].from} onChange={e => setTransport(prev => ({ ...prev, [direction]: { ...prev[direction], from: e.target.value }}))} className="border border-border rounded-lg px-3 py-2 bg-background text-sm flex-1" />
                                                     <input placeholder="目的地" value={transport[direction].to} onChange={e => setTransport(prev => ({ ...prev, [direction]: { ...prev[direction], to: e.target.value }}))} className="border border-border rounded-lg px-3 py-2 bg-background text-sm flex-1" />
                                                 </div>
-                                                <div className="flex gap-2">
+                                                <div className="flex flex-col sm:flex-row gap-2">
                                                     <div className="flex flex-col gap-1 flex-1">
                                                         <label className="text-xs text-muted-foreground">出發時間</label>
-                                                        <input type="datetime-local" value={transport[direction].departureTime} onChange={e => setTransport(prev => ({ ...prev, [direction]: { ...prev[direction], departureTime: e.target.value }}))} className="border border-border rounded-lg px-3 py-2 bg-background text-sm" />
+                                                        <input type="datetime-local" value={transport[direction].departureTime} onChange={e => setTransport(prev => ({ ...prev, [direction]: { ...prev[direction], departureTime: e.target.value }}))} className="w-full border border-border rounded-lg px-3 py-2 bg-background text-sm" />
                                                     </div>
                                                     <div className="flex flex-col gap-1 flex-1">
                                                         <label className="text-xs text-muted-foreground">抵達時間</label>
-                                                        <input type="datetime-local" value={transport[direction].arrivalTime} onChange={e => setTransport(prev => ({ ...prev, [direction]: { ...prev[direction], arrivalTime: e.target.value }}))} className="border border-border rounded-lg px-3 py-2 bg-background text-sm" />
+                                                        <input type="datetime-local" value={transport[direction].arrivalTime} onChange={e => setTransport(prev => ({ ...prev, [direction]: { ...prev[direction], arrivalTime: e.target.value }}))} className="w-full border border-border rounded-lg px-3 py-2 bg-background text-sm" />
                                                     </div>
                                                 </div>
                                             </div>
