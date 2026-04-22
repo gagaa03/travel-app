@@ -72,12 +72,12 @@ function Reservations() {
 
     return (
         <div className="min-h-screen bg-background">
-            <div className="max-w-4xl mx-auto p-8 flex flex-col gap-6">
+            <div className="max-w-4xl mx-auto p-4 md:p-8 flex flex-col gap-6">
                 <div className="flex items-center gap-3">
                     <RippleButton onClick={() => navigate(`/trip/${id}`)} className="text-sm border-border">
                         ← 返回
                     </RippleButton>
-                    <h1 className="text-3xl font-bold text-primary">{trip.city_display} · 訂位資訊</h1>
+                    <h1 className="text-xl md:text-3xl font-bold text-primary">{trip.city_display} · 訂位資訊</h1>
                 </div>
 
                 <div className="bg-card rounded-2xl p-6 flex flex-col gap-4">
@@ -133,20 +133,22 @@ function Reservations() {
                     </form>}
                 </div>
 
-                <div className="flex gap-2">
-                    {['all', 'hotel', 'restaurant', 'attraction', 'other'].map(type => (
-                        <button
-                            key={type}
-                            onClick={() => setFilterType(type)}
-                            className={`text-sm px-3 py-1 rounded-full cursor-pointer transition-colors ${
-                                filterType === type
-                                    ? 'bg-primary text-primary-foreground'
-                                    : 'bg-secondary text-secondary-foreground hover:opacity-80'
-                            }`}
-                        >
-                            {type === 'all' ? '全部' : type === 'hotel' ? '飯店' : type === 'restaurant' ? '餐廳' : type === 'attraction' ? '景點' : '其他'}
-                        </button>
-                    ))}
+                <div className="overflow-x-auto pb-1 scrollbar-hide">
+                    <div className="flex gap-2 w-max">
+                        {['all', 'hotel', 'restaurant', 'attraction', 'other'].map(type => (
+                            <button
+                                key={type}
+                                onClick={() => setFilterType(type)}
+                                className={`text-sm px-3 py-1 rounded-full cursor-pointer transition-colors whitespace-nowrap ${
+                                    filterType === type
+                                        ? 'bg-primary text-primary-foreground'
+                                        : 'bg-secondary text-secondary-foreground hover:opacity-80'
+                                }`}
+                            >
+                                {type === 'all' ? '全部' : type === 'hotel' ? '飯店' : type === 'restaurant' ? '餐廳' : type === 'attraction' ? '景點' : '其他'}
+                            </button>
+                        ))}
+                    </div>
                 </div>
 
                 <div className="flex flex-col gap-3">

@@ -75,6 +75,12 @@ function TripDetail() {
         await updateTrip(id, { ...trip, cityDisplay: trip.city_display, startDate: trip.start_date, endDate: trip.end_date, status: newStatus, checklist, outbound: transport.outbound, inbound: transport.inbound })
     }
 
+    async function changeStatus(newStatus) {
+        setTripStatus(newStatus)
+        setMoreMenuOpen(false)
+        await updateTrip(id, { ...trip, cityDisplay: trip.city_display, startDate: trip.start_date, endDate: trip.end_date, status: newStatus, checklist, outbound: transport.outbound, inbound: transport.inbound })
+    }
+
     async function handleSaveTransport() {
         await updateTrip(id, { ...trip, cityDisplay: trip.city_display, startDate: trip.start_date, endDate: trip.end_date, checklist, outbound: transport.outbound, inbound: transport.inbound })
         setEditingTransport(false)
@@ -215,7 +221,7 @@ function TripDetail() {
                         <select
                             value={tripStatus}
                             onChange={handleStatusChange}
-                            className="border border-border rounded-lg px-3 py-2 bg-background text-sm cursor-pointer"
+                            className="hidden md:block border border-border rounded-lg px-3 py-2 bg-background text-sm cursor-pointer"
                         >
                             <option value="planning">計畫中</option>
                             <option value="ongoing">進行中</option>
@@ -230,6 +236,12 @@ function TripDetail() {
                             </button>
                             {moreMenuOpen && (
                                 <div className="absolute right-0 top-10 bg-card border border-border rounded-xl shadow-lg z-10 flex flex-col overflow-hidden min-w-32">
+                                    <div className="md:hidden border-b border-border">
+                                        <p className="px-4 pt-3 pb-1 text-xs text-muted-foreground">狀態</p>
+                                        {[['planning','計畫中'],['ongoing','進行中'],['completed','已完成']].map(([val, label]) => (
+                                            <button key={val} onClick={() => changeStatus(val)} className={`w-full px-4 py-2 text-sm text-left hover:bg-muted cursor-pointer ${tripStatus === val ? 'font-semibold text-primary' : ''}`}>{label}</button>
+                                        ))}
+                                    </div>
                                     <button onClick={() => { navigate(`/trip/${id}/edit`); setMoreMenuOpen(false) }} className="px-4 py-3 text-sm text-left hover:bg-muted cursor-pointer">編輯旅程</button>
                                     <button onClick={() => { navigate(`/trip/${id}/itinerary`); setMoreMenuOpen(false) }} className="px-4 py-3 text-sm text-left hover:bg-muted cursor-pointer">行程表</button>
                                     <button onClick={() => { navigate(`/trip/${id}/reservations`); setMoreMenuOpen(false) }} className="px-4 py-3 text-sm text-left hover:bg-muted cursor-pointer">訂位資訊</button>
@@ -327,6 +339,54 @@ function TripDetail() {
                             </div>
                         </BlurFade>
 
+                        {/* 手機版：天氣 + 匯率插在願望清單前 */}
+                        <div className="md:hidden flex flex-col gap-6">
+                            <BlurFade delay={0.4}>
+                                <div className="bg-card rounded-2xl p-6 flex flex-col gap-3 relative overflow-hidden">
+                                    {!weatherError && weather && <WeatherBackground conditionId={weather.weather[0].id} />}
+                                    <h2 className="font-bold text-lg text-primary relative z-10">天氣</h2>
+                                    {weatherError || !weather ? (
+                                        <p className="text-sm text-muted-foreground">天氣資料無法載入</p>
+                                    ) : (
+                                        <div className="flex items-center gap-4 relative z-10">
+                                            <p className="text-3xl font-bold">{weather.main.temp}°C</p>
+                                            <div className="flex flex-col gap-1 text-sm">
+                                                <p className="font-medium capitalize">{weather.weather[0].description}</p>
+                                                <p className="text-muted-foreground">濕度 {weather.main.humidity}%</p>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </BlurFade>
+                            <BlurFade delay={0.5}>
+                                <div className="bg-card rounded-2xl p-6 flex flex-col gap-4">
+                                    <h2 className="font-bold text-lg text-primary">匯率資訊</h2>
+                                    {!exchange ? (
+                                        <p className="text-sm text-muted-foreground">匯率資料無法載入</p>
+                                    ) : (
+                                        <>
+                                            <div className="flex flex-col gap-3">
+                                                <div>
+                                                    <p className="text-xs text-muted-foreground">1 {trip.currency} → 台幣</p>
+                                                    <p className="text-2xl font-semibold">{exchange.rates.TWD.toFixed(2)}</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-xs text-muted-foreground">1 TWD → {trip.currency}</p>
+                                                    <p className="text-2xl font-semibold">{(1 / exchange.rates.TWD).toFixed(4)}</p>
+                                                </div>
+                                            </div>
+                                            <div className="border-t border-border pt-3 flex flex-col gap-2">
+                                                <input type="number" value={converterAmount} onChange={e => setConverterAmount(e.target.value)} placeholder={`輸入 ${trip.currency} 金額`} className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-background" />
+                                                <p className="text-sm font-medium text-right">
+                                                    {converterAmount ? `≈ ${Math.round(converterAmount * exchange.rates.TWD).toLocaleString()} TWD` : <span className="text-muted-foreground">輸入金額換算</span>}
+                                                </p>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
+                            </BlurFade>
+                        </div>
+
                         <BlurFade delay={0.5} className="flex-1 flex flex-col">
                             <div className="bg-card rounded-2xl p-6 flex flex-col gap-4 flex-1">
                                 <h2 className="font-bold text-lg text-primary">願望清單</h2>
@@ -389,7 +449,7 @@ function TripDetail() {
                     {/* 右欄：天氣 + 匯率 + 國家 */}
                     <div className="flex flex-col gap-6">
 
-                        <BlurFade delay={0.4}>
+                        <BlurFade delay={0.4} className="hidden md:block">
                             <div className="bg-card rounded-2xl p-6 flex flex-col gap-3 relative overflow-hidden">
                                 {!weatherError && weather && (
                                     <WeatherBackground conditionId={weather.weather[0].id} />
@@ -411,7 +471,7 @@ function TripDetail() {
                             </div>
                         </BlurFade>
 
-                        <BlurFade delay={0.5}>
+                        <BlurFade delay={0.5} className="hidden md:block">
                             <div className="bg-card rounded-2xl p-6 flex flex-col gap-4">
                                 <h2 className="font-bold text-lg text-primary">匯率資訊</h2>
                                 {!exchange ? (

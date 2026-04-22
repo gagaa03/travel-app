@@ -85,13 +85,13 @@ function Expenses() {
 
     return (
         <div className="min-h-screen bg-background">
-            <div className="max-w-4xl mx-auto p-8 flex flex-col gap-6">
+            <div className="max-w-4xl mx-auto p-4 md:p-8 flex flex-col gap-6">
 
                 <div className="flex items-center gap-3">
                     <RippleButton onClick={() => navigate(`/trip/${id}`)} className="text-sm border-border">
                         ← 返回
                     </RippleButton>
-                    <h1 className="text-3xl font-bold text-primary">{trip.city_display} · 花費記錄</h1>
+                    <h1 className="text-xl md:text-3xl font-bold text-primary">{trip.city_display} · 花費記錄</h1>
                 </div>
 
                 <div className="bg-card rounded-2xl p-6 flex flex-col gap-4">
@@ -167,7 +167,8 @@ function Expenses() {
                     )}
                 </div>
 
-                <div className="flex gap-2 flex-wrap">
+                <div className="overflow-x-auto pb-1 scrollbar-hide">
+                <div className="flex gap-2 w-max">
                     {['all', ...CATEGORIES.map(c => c.value)].map(cat => (
                         <button
                             key={cat}
@@ -177,6 +178,7 @@ function Expenses() {
                             {cat === 'all' ? '全部' : CATEGORIES.find(c => c.value === cat)?.label}
                         </button>
                     ))}
+                </div>
                 </div>
 
                 <div className="flex flex-col gap-3">
@@ -206,19 +208,19 @@ function Expenses() {
                                         </div>
                                     </>
                                 ) : (
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex flex-col gap-1">
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground">
+                                    <div className="flex items-start justify-between gap-2">
+                                        <div className="flex flex-col gap-1 flex-1 min-w-0">
+                                            <div className="flex items-center gap-2 flex-wrap">
+                                                <span className="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground shrink-0">
                                                     {CATEGORIES.find(c => c.value === e.category)?.label}
                                                 </span>
                                                 <p className="font-medium">{e.name}</p>
                                             </div>
+                                            <p className="font-semibold text-sm">{Number(e.amount).toLocaleString()} {trip.currency}</p>
                                             {e.date && <p className="text-xs text-muted-foreground">{e.date.slice(0, 10)}</p>}
                                             {e.notes && <p className="text-xs text-muted-foreground">{e.notes}</p>}
                                         </div>
-                                        <div className="flex items-center gap-3">
-                                            <p className="font-semibold">{Number(e.amount).toLocaleString()} {trip.currency}</p>
+                                        <div className="flex items-center gap-3 shrink-0">
                                             <button onClick={() => handleEdit(e)} className="text-xs text-muted-foreground cursor-pointer hover:opacity-70">編輯</button>
                                             <button onClick={() => handleDelete(e.id)} className="text-xs text-destructive cursor-pointer hover:opacity-70">刪除</button>
                                         </div>

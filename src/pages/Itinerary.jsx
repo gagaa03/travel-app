@@ -330,7 +330,7 @@ function ItineraryItem({ item, onDelete, onEdit, isFirst, isLast, city }) {
                             <select
                                 value={editForm.category}
                                 onChange={e => setEditForm(prev => ({ ...prev, category: e.target.value }))}
-                                className="border border-border rounded-lg px-2 py-1.5 bg-background text-xs"
+                                className="border border-border rounded-lg px-2 py-1.5 bg-background text-xs shrink-0"
                             >
                                 {CATEGORIES.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
                             </select>
@@ -480,7 +480,7 @@ function Itinerary() {
                     <RippleButton onClick={() => navigate(`/trip/${id}`)} className="text-sm border-border">
                         ← 返回
                     </RippleButton>
-                    <h1 className="text-3xl font-bold text-primary">{trip.city_display} · 行程表</h1>
+                    <h1 className="text-xl md:text-3xl font-bold text-primary">{trip.city_display} · 行程表</h1>
                 </div>
 
                 <div className="overflow-x-auto pb-1 scrollbar-hide">
