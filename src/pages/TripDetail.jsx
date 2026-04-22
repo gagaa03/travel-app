@@ -53,12 +53,18 @@ function TripDetail() {
     // 從後端載入旅程資料，並初始化所有 state
     useEffect(() => {
         async function loadTrip() {
-            const data = await fetchTrip(id)
-            setTrip(data)
-            setTripStatus(data.status || 'planning')
-            setChecklist(data.checklist || [])
-            if (data.outbound && Object.keys(data.outbound).length > 0) {
-                setTransport({ outbound: data.outbound, inbound: data.inbound })
+            try {
+                const data = await fetchTrip(id)
+                setTrip(data)
+                setTripStatus(data.status || 'planning')
+                setChecklist(data.checklist || [])
+                if (data.outbound && Object.keys(data.outbound).length > 0) {
+                    setTransport({ outbound: data.outbound, inbound: data.inbound })
+                }
+            } catch {
+                setError('無法載入旅程資料，請稍後再試')
+            } finally {
+                setLoading(false)
             }
         }
         loadTrip()

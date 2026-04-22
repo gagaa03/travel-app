@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { fetchTrip, fetchReservations, createReservation, updateReservation, deleteReservation } from '../services/api.js'
 import { RippleButton } from '@/components/ui/ripple-button'
+import { Skeleton } from '@/components/ui/skeleton'
 
 
 function Reservations() {
@@ -9,6 +10,7 @@ function Reservations() {
     const navigate = useNavigate()
 
     const [trip, setTrip] = useState(null)
+    const [loading, setLoading] = useState(true)
     const [showForm, setShowForm] = useState(false)
     const [filterType, setFilterType] = useState('all')
     const [editingId, setEditingId] = useState(null)
@@ -26,22 +28,26 @@ function Reservations() {
 
     useEffect(() => {
         async function load() {
-            const [tripData, reservationsData] = await Promise.all([
+            const [tripResult, reservationsResult] = await Promise.allSettled([
                 fetchTrip(id),
                 fetchReservations(id),
             ])
-            setTrip(tripData)
-            setReservations(reservationsData)
+            if (tripResult.status === 'fulfilled') setTrip(tripResult.value)
+            if (reservationsResult.status === 'fulfilled') setReservations(reservationsResult.value)
+            setLoading(false)
         }
         load()
     }, [id])
 
     async function handleSubmit(e) {
         e.preventDefault()
-        const newReservation = await createReservation(id, form)
-        setReservations(prev => [...prev, newReservation])
-        setForm({ type: 'hotel', name: '', location: '', confirmationCode: '', date: '', endDate: '', notes: '' })
-        setShowForm(false)
+        if (!form.name.trim()) { alert('名稱不能為空'); return }
+        try {
+            const newReservation = await createReservation(id, form)
+            setReservations(prev => [...prev, newReservation])
+            setForm({ type: 'hotel', name: '', location: '', confirmationCode: '', date: '', endDate: '', notes: '' })
+            setShowForm(false)
+        } catch { alert('新增失敗，請稍後再試') }
     }
 
     function handleEdit(r) {
@@ -58,15 +64,32 @@ function Reservations() {
     }
 
     async function handleSave(reservationId) {
-        const updated = await updateReservation(id, reservationId, editForm)
-        setReservations(prev => prev.map(r => r.id === reservationId ? updated : r))
-        setEditingId(null)
+        try {
+            const updated = await updateReservation(id, reservationId, editForm)
+            setReservations(prev => prev.map(r => r.id === reservationId ? updated : r))
+            setEditingId(null)
+        } catch { alert('儲存失敗，請稍後再試') }
     }
 
     async function handleDelete(reservationId) {
-        await deleteReservation(id, reservationId)
-        setReservations(prev => prev.filter(r => r.id !== reservationId))
+        try {
+            await deleteReservation(id, reservationId)
+            setReservations(prev => prev.filter(r => r.id !== reservationId))
+        } catch { alert('刪除失敗，請稍後再試') }
     }
+
+    if (loading) return (
+        <div className="min-h-screen bg-background">
+            <div className="max-w-4xl mx-auto p-4 md:p-8 flex flex-col gap-6">
+                <div className="flex items-center gap-3">
+                    <Skeleton className="h-9 w-20 rounded-xl" />
+                    <Skeleton className="h-8 w-48" />
+                </div>
+                <Skeleton className="h-40 w-full rounded-2xl" />
+                <Skeleton className="h-32 w-full rounded-2xl" />
+            </div>
+        </div>
+    )
 
     if (!trip) return null
 

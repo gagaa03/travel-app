@@ -58,13 +58,14 @@ function AddTrip() {
         console.log('呼叫 API，國家：', form.country)
         try {
             const response = await fetch(`https://restcountries.com/v3.1/name/${form.country}`)
-            const data = await response.json();
-            console.log('API 回傳：', data)
-            const currencyCode = Object.keys(data[0].currencies)[0];
-            console.log('貨幣代碼：', currencyCode)
-            setForm(prev => ({ ...prev, currency: currencyCode }))
+            if (!response.ok) return
+            const data = await response.json()
+            const currencies = data[0]?.currencies
+            if (!currencies) return
+            const currencyCode = Object.keys(currencies)[0]
+            if (currencyCode) setForm(prev => ({ ...prev, currency: currencyCode }))
         } catch (err) {
-            console.log('無法取得貨幣資訊', err);
+            // 無法取得貨幣資訊，維持原值
         }
     }
 

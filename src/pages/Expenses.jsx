@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { fetchTrip, fetchExpenses, createExpense, updateExpense, deleteExpense } from '../services/api.js'
 import { RippleButton } from '@/components/ui/ripple-button'
+import { Skeleton } from '@/components/ui/skeleton'
 
 const CATEGORIES = [
     { value: 'food', label: '餐飲' },
@@ -22,6 +23,7 @@ function Expenses() {
     const [filterCategory, setFilterCategory] = useState('all')
     const [editingId, setEditingId] = useState(null)
     const [editForm, setEditForm] = useState({})
+    const [loading, setLoading] = useState(true)
     const [form, setForm] = useState({
         name: '',
         amount: '',
@@ -32,12 +34,13 @@ function Expenses() {
 
     useEffect(() => {
         async function load() {
-            const [tripData, expensesData] = await Promise.all([
+            const [tripResult, expensesResult] = await Promise.allSettled([
                 fetchTrip(id),
                 fetchExpenses(id),
             ])
-            setTrip(tripData)
-            setExpenses(expensesData)
+            if (tripResult.status === 'fulfilled') setTrip(tripResult.value)
+            if (expensesResult.status === 'fulfilled') setExpenses(expensesResult.value)
+            setLoading(false)
         }
         load()
     }, [id])
@@ -49,10 +52,13 @@ function Expenses() {
     async function handleSubmit(e) {
         e.preventDefault()
         if (!form.name.trim() || !form.amount) return
-        const newExpense = await createExpense(id, form)
-        setExpenses(prev => [...prev, newExpense])
-        setForm({ name: '', amount: '', category: 'food', date: '', notes: '' })
-        setShowForm(false)
+        if (Number(form.amount) <= 0) { alert('金額必須大於 0'); return }
+        try {
+            const newExpense = await createExpense(id, form)
+            setExpenses(prev => [...prev, newExpense])
+            setForm({ name: '', amount: '', category: 'food', date: '', notes: '' })
+            setShowForm(false)
+        } catch { alert('新增失敗，請稍後再試') }
     }
 
     function handleEdit(expense) {
@@ -67,18 +73,35 @@ function Expenses() {
     }
 
     async function handleSave(expenseId) {
-        const updated = await updateExpense(id, expenseId, editForm)
-        setExpenses(prev => prev.map(e => e.id === expenseId ? updated : e))
-        setEditingId(null)
+        try {
+            const updated = await updateExpense(id, expenseId, editForm)
+            setExpenses(prev => prev.map(e => e.id === expenseId ? updated : e))
+            setEditingId(null)
+        } catch { alert('儲存失敗，請稍後再試') }
     }
 
     async function handleDelete(expenseId) {
-        await deleteExpense(id, expenseId)
-        setExpenses(prev => prev.filter(e => e.id !== expenseId))
+        try {
+            await deleteExpense(id, expenseId)
+            setExpenses(prev => prev.filter(e => e.id !== expenseId))
+        } catch { alert('刪除失敗，請稍後再試') }
     }
 
     const filteredExpenses = expenses.filter(e =>
         filterCategory === 'all' || e.category === filterCategory
+    )
+
+    if (loading) return (
+        <div className="min-h-screen bg-background">
+            <div className="max-w-4xl mx-auto p-4 md:p-8 flex flex-col gap-6">
+                <div className="flex items-center gap-3">
+                    <Skeleton className="h-9 w-20 rounded-xl" />
+                    <Skeleton className="h-8 w-48" />
+                </div>
+                <Skeleton className="h-40 w-full rounded-2xl" />
+                <Skeleton className="h-64 w-full rounded-2xl" />
+            </div>
+        </div>
     )
 
     if (!trip) return null

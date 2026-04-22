@@ -8,6 +8,7 @@ import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-ki
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { Train, Bus, Car, Plane, Footprints, Plus, MapPin } from 'lucide-react'
+import { Skeleton } from '@/components/ui/skeleton'
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -396,51 +397,80 @@ function Itinerary() {
     const [itinerary, setItinerary] = useState({})
     const [activeDay, setActiveDay] = useState(1)
     const [showForm, setShowForm] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [form, setForm] = useState({ title: '', time: '', notes: '', category: 'other', location: '' })
 
     useEffect(() => {
         async function load() {
-            const [tripData, items] = await Promise.all([
+            const [tripResult, itemsResult] = await Promise.allSettled([
                 fetchTrip(id),
                 fetchItinerary(id),
             ])
-            setTrip(tripData)
-            const grouped = items.reduce((acc, item) => {
-                if (!acc[item.day]) acc[item.day] = []
-                acc[item.day].push(item)
-                return acc
-            }, {})
-            setItinerary(grouped)
+            if (tripResult.status === 'fulfilled') setTrip(tripResult.value)
+            if (itemsResult.status === 'fulfilled') {
+                const grouped = itemsResult.value.reduce((acc, item) => {
+                    if (!acc[item.day]) acc[item.day] = []
+                    acc[item.day].push(item)
+                    return acc
+                }, {})
+                setItinerary(grouped)
+            }
+            setLoading(false)
         }
         load()
     }, [id])
 
     const sensors = useSensors(useSensor(PointerSensor))
 
+    if (loading) return (
+        <div className="min-h-screen bg-background">
+            <div className="max-w-7xl mx-auto p-4 md:p-8 flex flex-col gap-6">
+                <div className="flex items-center gap-3">
+                    <Skeleton className="h-9 w-20 rounded-xl" />
+                    <Skeleton className="h-8 w-48" />
+                </div>
+                <div className="flex gap-2">
+                    {[1,2,3,4].map(i => <Skeleton key={i} className="h-9 w-24 rounded-full" />)}
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6">
+                    <div className="flex flex-col gap-4">
+                        <Skeleton className="h-16 w-full rounded-2xl" />
+                        <Skeleton className="h-48 w-full rounded-2xl" />
+                    </div>
+                    <Skeleton className="h-[300px] lg:h-[600px] rounded-2xl" />
+                </div>
+            </div>
+        </div>
+    )
+
     if (!trip) return null
 
-    const start = new Date(trip.start_date)
-    const end = new Date(trip.end_date)
-    const totalDays = Math.round((end - start) / (1000 * 60 * 60 * 24)) + 1
+    const start = trip.start_date ? new Date(trip.start_date) : new Date()
+    const end = trip.end_date ? new Date(trip.end_date) : new Date()
+    const totalDays = Math.max(1, Math.round((end - start) / (1000 * 60 * 60 * 24)) + 1)
     const dayItems = itinerary[activeDay] || []
 
     async function handleAdd() {
         if (!form.title.trim()) return
-        const newItem = await createItineraryItem(id, { ...form, day: activeDay })
-        setItinerary(prev => ({
-            ...prev,
-            [activeDay]: [...(prev[activeDay] || []), newItem],
-        }))
-        setForm({ title: '', time: '', notes: '', category: 'other', location: '' })
-        setShowForm(false)
+        try {
+            const newItem = await createItineraryItem(id, { ...form, day: activeDay })
+            setItinerary(prev => ({
+                ...prev,
+                [activeDay]: [...(prev[activeDay] || []), newItem],
+            }))
+            setForm({ title: '', time: '', notes: '', category: 'other', location: '' })
+            setShowForm(false)
+        } catch { alert('新增失敗，請稍後再試') }
     }
 
     async function handleDelete(itemId) {
-        await deleteItineraryItem(id, itemId)
-        setItinerary(prev => ({
-            ...prev,
-            [activeDay]: (prev[activeDay] || []).filter(i => i.id !== itemId),
-        }))
+        try {
+            await deleteItineraryItem(id, itemId)
+            setItinerary(prev => ({
+                ...prev,
+                [activeDay]: (prev[activeDay] || []).filter(i => i.id !== itemId),
+            }))
+        } catch { alert('刪除失敗，請稍後再試') }
     }
 
     async function handleEdit(itemId, updatedData) {
