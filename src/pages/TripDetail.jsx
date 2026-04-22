@@ -12,6 +12,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useWeather } from '../hooks/useWeather';
 
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import { getCoordinates } from '../services/geoService';
 import { RippleButton } from "../components/ui/ripple-button";
 
@@ -561,7 +563,15 @@ function TripDetail() {
                                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                         attribution='&copy; OpenStreetMap contributors'
                                     />
-                                    <Marker position={[coords.lat, coords.lon]}>
+                                    <Marker
+                                        position={[coords.lat, coords.lon]}
+                                        icon={L.divIcon({
+                                            html: `<div style="background:#1B3F6B;width:24px;height:24px;border-radius:50%;border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,0.35)"></div>`,
+                                            className: '',
+                                            iconSize: [24, 24],
+                                            iconAnchor: [12, 12],
+                                        })}
+                                    >
                                         <Popup>{trip.city_display}</Popup>
                                     </Marker>
                                 </MapContainer>
