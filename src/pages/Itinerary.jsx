@@ -234,7 +234,7 @@ function TransportConnector({ item, onSave }) {
 
     return (
         <div className="flex gap-3">
-            <div className="w-10 md:w-14 shrink-0" />
+            <div className="hidden md:block w-14 shrink-0" />
             <div className="w-4 flex flex-col items-center shrink-0">
                 <div className="w-px flex-1 bg-border" />
             </div>
@@ -305,7 +305,7 @@ function ItineraryItem({ item, onDelete, onEdit, isFirst, isLast, city }) {
 
     return (
         <div ref={setNodeRef} style={style} className="flex gap-3 items-center">
-            <div className="w-10 md:w-14 shrink-0 text-right">
+            <div className="hidden md:block w-14 shrink-0 text-right">
                 <span className="text-sm font-mono font-semibold text-primary">
                     {item.time || ''}
                 </span>
@@ -366,6 +366,7 @@ function ItineraryItem({ item, onDelete, onEdit, isFirst, isLast, city }) {
                 ) : (
                     <div className="flex items-center gap-2">
                         <div className="flex-1">
+                            {item.time && <p className="md:hidden text-xs font-mono text-primary mb-0.5">{item.time}</p>}
                             <p className="font-medium">{item.title}</p>
                             {item.location && (
                                 <div className="flex items-center gap-1 mt-0.5">

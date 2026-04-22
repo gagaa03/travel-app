@@ -388,7 +388,7 @@ function TripDetail() {
                         </div>
 
                         <BlurFade delay={0.5} className="flex-1 flex flex-col">
-                            <div className="bg-card rounded-2xl p-6 flex flex-col gap-4 flex-1">
+                            <div className="bg-card rounded-2xl p-4 md:p-6 flex flex-col gap-4 flex-1">
                                 <h2 className="font-bold text-lg text-primary">願望清單</h2>
                                 <form onSubmit={handleAddItem} className="flex flex-col gap-2">
                                     <div className="flex gap-2">
@@ -418,7 +418,7 @@ function TripDetail() {
                                             placeholder="備註（地址、開放時間...）"
                                             className="flex-1 border border-border rounded-lg px-3 py-2 text-sm bg-background"
                                         />
-                                        <RippleButton type="submit" className="bg-primary text-primary-foreground border-primary text-sm">
+                                        <RippleButton type="submit" className="bg-primary text-primary-foreground border-primary text-sm shrink-0 whitespace-nowrap">
                                             新增
                                         </RippleButton>
                                     </div>
